@@ -13,16 +13,45 @@
         </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Description</td>
-                    <td>@item.Amount $</td>
-                    <td>@item.Category</td>
-                    <td>@item.Date.ToString("yyyy-MM-dd")</td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Description</td>
+                <td>@item.Amount $</td>
+                <td>@item.Category</td>
+                <td>@item.Date.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
         </tbody>
     </table>
 
 </div>
+
+<h2>Expenses Overview</h2>
+<div>
+    <canvas style="max-width: 450px; max-height: 450px;" id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    fetch('/Expenses/GetChart')
+        .then(response => response.json())
+        .then(data => {
+             new Chart(ctx, {
+                  type: 'pie',
+                  data: {
+                    labels: data.map(d => d.category),
+                    datasets: [{
+
+                      data: data.map(d => d.total),
+                    }]
+                  },
+
+            });
+        })
+
+   
+</script>
