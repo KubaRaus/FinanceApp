@@ -35,6 +35,43 @@ namespace FinanceApp.Controllers
             return View(expense);
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var expense = await _expensesService.GetById(id);
+            if (expense == null)
+            {
+                return NotFound();
+            }
+            return View(expense);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Expense expense)
+        {
+            if (ModelState.IsValid)
+            {
+                await _expensesService.Update(expense);
+                return RedirectToAction("Index");
+            }
+            return View(expense);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var expense = await _expensesService.GetById(id);
+            if (expense == null)
+            {
+                return NotFound();
+            }
+            return View(expense);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _expensesService.Delete(id);
+            return RedirectToAction("Index");
+        }
         public IActionResult GetChart()
         {
             var data = _expensesService.GetChartData();

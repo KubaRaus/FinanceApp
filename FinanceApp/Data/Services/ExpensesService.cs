@@ -23,6 +23,28 @@ namespace FinanceApp.Data.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Expense> GetById(int id)
+        {
+            var expense = await _context.Expenses.FindAsync(id);
+            return expense;
+        }
+
+        public async Task Update(Expense expense)
+        {
+            _context.Expenses.Update(expense);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var expense = await _context.Expenses.FindAsync(id);
+            if (expense != null)
+            {
+                _context.Expenses.Remove(expense);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public IQueryable GetChartData()
         {
             var data = _context.Expenses
@@ -34,5 +56,6 @@ namespace FinanceApp.Data.Services
                 });
             return data;
         }
+
     }
 }

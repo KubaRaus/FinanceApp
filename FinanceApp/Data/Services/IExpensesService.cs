@@ -6,6 +6,9 @@ namespace FinanceApp.Data.Services
     {
         Task<IEnumerable<Expense>> GetAll();
         Task Add(Expense expense);
+        Task<Expense> GetById(int id);
+        Task Update(Expense expense);
+        Task Delete(int id);
         IQueryable GetChartData();
     }
 }
