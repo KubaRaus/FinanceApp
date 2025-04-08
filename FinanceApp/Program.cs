@@ -10,6 +10,7 @@ builder.Services.AddDbContext<FinanceAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 builder.Services.AddScoped<IExpensesService, ExpensesService>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
